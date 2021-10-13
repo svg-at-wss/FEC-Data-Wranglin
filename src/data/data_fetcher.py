@@ -263,6 +263,8 @@ class DataFetcher:
 
         # Pull out the data we want from each transaction on a page and add it to the complete_list
         for item in self.info["results"]:
+
+            # Handle non-numeric zip codes
             contributor_zip = item["contributor_zip"]
             try:
                 if contributor_zip.isnumeric():
@@ -275,7 +277,19 @@ class DataFetcher:
                     contributor_zip = 99999
             except:
                 contributor_zip = 99999
-
+            
+            # Handle null party values
+            party = item["committee"]["party"]    
+            if item["committee"]["name"] == "ACTBLUE":
+                party = "DEM"
+            elif item["committee"]["name"] == "WINRED":
+                party = "REP"
+            elif item["committee"]["party"] == None:
+                party = "OTH"
+            else:
+                party = item["committee"]["party"]
+            
+            # Bundle the data into a list and add it to the complete_list
             self.complete_list.append(
                 current_list := [
                     committe_name := item["committee"]["name"],
@@ -287,7 +301,7 @@ class DataFetcher:
                     contributor_city := item["contributor_city"],
                     contributor_state := item["contributor_state"],
                     contributor_zip,
-                    party := item["committee"]["party"],
+                    party,
                 ]
             )
 
