@@ -67,14 +67,14 @@ async def display_elements(request: Request):
     """
     Displays the map page
     """
-    return templates.TemplateResponse('map.html', {"request": request, "MAPS_API_KEY": os.environ.get("MAPS_API_KEY")})
+    return templates.TemplateResponse('map_landing.html', {"request": request, "MAPS_API_KEY": os.environ.get("MAPS_API_KEY")})
 
 
 @app.post('/generic', response_class=HTMLResponse)
 async def display_map_results(request: Request, background_tasks: BackgroundTasks,
                             election_year: str = Form(...),
                             election_type: str = Form(...),
-                            ship_address: str = Form(...),
+                            location: str = Form(...),
                             locality: str = Form(...),
                             state: str = Form(...),
                             postcode: str = Form(...),
@@ -90,7 +90,7 @@ async def display_map_results(request: Request, background_tasks: BackgroundTask
                                         {"request": request,
                                         "election_year": election_year,
                                         "election_type": election_type,
-                                        "ship_address": ship_address,
+                                        "ship_address": location,
                                         "locality": locality,
                                         "state": state,
                                         "postcode": postcode,

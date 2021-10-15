@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Landing - Forty by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script>
+			let autocomplete;
+			let address1Field;
+			let address2Field;
+			let postalField;
+
+			function initAutocomplete() {
+				address1Field = document.querySelector("#location");
+				address2Field = document.querySelector("#address2");
+				postalField = document.querySelector("#postcode");
+				// Create the autocomplete object, restricting the search predictions to
+				// addresses in the US and Canada.
+				autocomplete = new google.maps.places.Autocomplete(address1Field, {
+				componentRestrictions: { country: ["us"] },
+				fields: ["address_components", "geometry"],
+				types: ["address"],
+				});
+				address1Field.focus();
+				// When the user selects an address from the drop-down, populate the
+				// address fields in the form.
+				autocomplete.addListener("place_changed", fillInAddress);
+			}
+
+			// [START maps_places_autocomplete_addressform_fillform]
+			function fillInAddress() {
+				// Get the place details from the autocomplete object.
+				const place = autocomplete.getPlace();
+				let address1 = "";
+				let postcode = "";
+
+				// Get each component of the address from the place details,
+				// and then fill-in the corresponding field on the form.
+				// place.address_components are google.maps.GeocoderAddressComponent objects
+				// which are documented at http://goo.gle/3l5i5Mr
+				for (const component of place.address_components) {
+					const componentType = component.types[0];
+
+				switch (componentType) {
+					case "street_number": {
+						address1 = `${component.long_name} ${address1}`;
+					break;
+					}
+
+					case "route": {
+						address1 += component.short_name;
+					break;
+					}
+
+					case "postal_code": {
+						postcode = `${component.long_name}${postcode}`;
+					break;
+					}
+
+					case "postal_code_suffix": {
+						postcode = `${postcode}-${component.long_name}`;
+					break;
+					}
+					case "locality":
+						document.querySelector("#locality").value = component.long_name;
+					break;
+					case "administrative_area_level_1": {
+						document.querySelector("#state").value = component.short_name;
+					break;
+					}
+					case "country":
+						document.querySelector("#country").value = component.long_name;
+					break;
+				}
+				}
+
+				address1Field.value = address1;
+				postalField.value = postcode;
+			}
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+				<!-- Note: The "styleN" class below should match that of the banner element. -->
+					<header id="header" class="alt style2">
+						<a href="/" class="logo"><strong>Forty</strong> <span>by HTML5 UP</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="/">Home</a></li>
+							<li><a href="/landing">Landing</a></li>
+							<li><a href="/generic">Generic</a></li>
+							<li><a href="/elements">Elements</a></li>
+						</ul>
+						<ul class="actions stacked">
+							<li><a href="#" class="button primary fit">Get Started</a></li>
+							<li><a href="#" class="button fit">Log In</a></li>
+						</ul>
+					</nav>
+
+				<!-- Banner -->
+				<!-- Note: The "styleN" class below should match that of the header element. -->
+					<section id="banner" class="style2" style="background-position: center 0px; background-image: url('images/treehouse.jpg');">
+						<div class="inner">
+							<span class="image">
+								<img src="images/pic07.jpg" alt="" />
+							</span>
+							<header class="major">
+								<h1>Neighborhood Politics</h1>
+							</header>
+							<div class="content">
+								<p>Interested in see how much your local community spends on politics? Enter your address below along with the election year and type of political donations to find out.</p>
+							</div>
+						</div>
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h2>View Summary Of Local Donations</h2>
+									</header>
+									<section>
+										<form id="local_doantion-form" action="/generic" method="post" autocomplete="off">
+											<div class="col-12">
+												<h4>Enter an election year between 2004 and 2022</h4>
+												<select id="election_year" name="election_year">
+												<option value="2022">2022</option>
+												<option value="2020">2020</option>
+												<option value="2018">2018</option>
+												<option value="2016">2016</option>
+												<option value="2014">2014</option>
+												<option value="2012">2012</option>
+												<option value="2010">2010</option>
+												<option value="2008">2008</option>
+												<option value="2006">2006</option>
+												<option value="2004">2004</option>
+												</select>
+											</div>
+											<div class="col-12">
+												<h4>Enter election type.</h4>
+												<ul>
+												<li>A for all donation info</li>
+												<li>H for only direct donations to House of Representitives campaigns</li>
+												<li>S for direct donations to Senate campaigns</li>
+												<li>P for direct donations to Presidential campaigns</li>
+												</ul>
+												<select id="election_type" name="election_type">
+												<option value="A">All Donation Info</option>
+												<option value="P">Direct Presidential Donations</option>
+												<option value="S">Direct Senate Donations</option>
+												<option value="H">Direct House Donations</option>
+												</select>
+											</div>
+											<label class="full-field">
+												<!-- Avoid the word "address" in id, name, or label text to avoid browser autofill from conflicting with Place Autocomplete. Star or comment bug https://crbug.com/587466 to request Chromium to honor autocomplete="off" attribute. -->
+												<span class="form-label">Your location</span>
+												<input
+												type="text"
+												id="location"
+												name="location"
+												required
+												autocomplete="off"
+												/>
+											</label>
+											<input type="hidden" id="location2" name="location2" />
+											<input type="text" id="locality" name="locality" required/>
+											<input type="text" id="state" name="state" required />
+											<input type="text" id="postcode" name="postcode" required />
+											<input type="hidden" id="country" name="country" required />
+											<button type="submit" class="my-button">See Local Summary</button>
+										</form>
+									</section>
+								</div>
+							</section>
+
+						<!-- Three -->
+							<section id="three">
+								<div class="inner">
+									<header class="major">
+										<h2>Massa libero</h2>
+									</header>
+									<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus.</p>
+									<ul class="actions">
+										<li><a href="/generic" class="button next">Get Started</a></li>
+									</ul>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<label for="name">Name</label>
+											<input type="text" name="name" id="name" />
+										</div>
+										<div class="field half">
+											<label for="email">Email</label>
+											<input type="text" name="email" id="email" />
+										</div>
+										<div class="field">
+											<label for="message">Message</label>
+											<textarea name="message" id="message" rows="6"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send Message" class="primary" /></li>
+										<li><input type="reset" value="Clear" /></li>
+									</ul>
+								</form>
+							</section>
+							<section class="split">
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-envelope"></span>
+										<h3>Email</h3>
+										<a href="#">information@untitled.tld</a>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-phone"></span>
+										<h3>Phone</h3>
+										<span>(000) 000-0000 x12387</span>
+									</div>
+								</section>
+								<section>
+									<div class="contact-method">
+										<span class="icon solid alt fa-home"></span>
+										<h3>Address</h3>
+										<span>1234 Somewhere Road #5432<br />
+										Nashville, TN 00000<br />
+										United States of America</span>
+									</div>
+								</section>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+								<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+								<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script
+				src="https://maps.googleapis.com/maps/api/js?key={{MAPS_API_KEY}}&callback=initAutocomplete&libraries=places&v=weekly"
+				async
+			></script>
+	</body>
+</html>
