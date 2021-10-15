@@ -141,53 +141,58 @@
 									</header>
 									<section>
 										<form id="local_doantion-form" action="/generic" method="post" autocomplete="off">
-											<div class="col-12">
-												<h4>Enter an election year between 2004 and 2022</h4>
-												<select id="election_year" name="election_year">
-												<option value="2022">2022</option>
-												<option value="2020">2020</option>
-												<option value="2018">2018</option>
-												<option value="2016">2016</option>
-												<option value="2014">2014</option>
-												<option value="2012">2012</option>
-												<option value="2010">2010</option>
-												<option value="2008">2008</option>
-												<option value="2006">2006</option>
-												<option value="2004">2004</option>
-												</select>
+											<div class="fields">
+												<div class="field half">
+													<h4>Enter an election year between 2004 and 2022</h4>
+													<select id="election_year" name="election_year">
+													<option value="2022">2022</option>
+													<option value="2020">2020</option>
+													<option value="2018">2018</option>
+													<option value="2016">2016</option>
+													<option value="2014">2014</option>
+													<option value="2012">2012</option>
+													<option value="2010">2010</option>
+													<option value="2008">2008</option>
+													<option value="2006">2006</option>
+													<option value="2004">2004</option>
+													</select>
+												</div>
+												<div class="field half">
+													<h4>Enter election type.</h4>
+													<select id="election_type" name="election_type">
+													<option value="A">All Donation Info</option>
+													<option value="P">Direct Presidential Donations</option>
+													<option value="S">Direct Senate Donations</option>
+													<option value="H">Direct House Donations</option>
+													</select>
+												</div>
+												<div class="field full" style="text-align:center">
+													<h4>Enter your address</h4>
+												</div>
+												<div class="field quarter">
+													<input
+													type="text"
+													id="location"
+													name="location"
+													required
+													autocomplete="off"
+													/>
+												</div>
+												<input type="hidden" id="location2" name="location2" />
+												<div class="field quarter">
+													<input type="text" id="locality" name="locality" required/>
+												</div>
+												<div class="field quarter">
+													<input type="text" id="state" name="state" required />
+												</div>
+												<div class="field quarter">
+													<input type="text" id="postcode" name="postcode" required />
+												</div>
+												<input type="hidden" id="country" name="country" required />
+												<div class="field full">
+													<button type="submit" class="my-button">See Local Summary</button>
+												</div>
 											</div>
-											<div class="col-12">
-												<h4>Enter election type.</h4>
-												<ul>
-												<li>A for all donation info</li>
-												<li>H for only direct donations to House of Representitives campaigns</li>
-												<li>S for direct donations to Senate campaigns</li>
-												<li>P for direct donations to Presidential campaigns</li>
-												</ul>
-												<select id="election_type" name="election_type">
-												<option value="A">All Donation Info</option>
-												<option value="P">Direct Presidential Donations</option>
-												<option value="S">Direct Senate Donations</option>
-												<option value="H">Direct House Donations</option>
-												</select>
-											</div>
-											<label class="full-field">
-												<!-- Avoid the word "address" in id, name, or label text to avoid browser autofill from conflicting with Place Autocomplete. Star or comment bug https://crbug.com/587466 to request Chromium to honor autocomplete="off" attribute. -->
-												<span class="form-label">Your location</span>
-												<input
-												type="text"
-												id="location"
-												name="location"
-												required
-												autocomplete="off"
-												/>
-											</label>
-											<input type="hidden" id="location2" name="location2" />
-											<input type="text" id="locality" name="locality" required/>
-											<input type="text" id="state" name="state" required />
-											<input type="text" id="postcode" name="postcode" required />
-											<input type="hidden" id="country" name="country" required />
-											<button type="submit" class="my-button">See Local Summary</button>
 										</form>
 									</section>
 								</div>
