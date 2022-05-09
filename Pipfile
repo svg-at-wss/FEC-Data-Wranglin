@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 appdirs = "==1.4.4"
-astroid = "==2.4.2"
+astroid = "==2.11.5"
 black = "==20.8b1"
 certifi = "==2020.11.8"
 chardet = "==3.0.4"
