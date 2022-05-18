@@ -25,7 +25,7 @@ pytz==2020.4
 regex==2020.11.13
 requests==2.25.1
 scipy==1.6.3
-setuptools==18.0
+setuptools==62.3.2
 six==1.15.0
 scikit_learn==0.24.2
 sparse_dot_topn==0.3.1
