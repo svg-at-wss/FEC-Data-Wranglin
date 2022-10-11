@@ -1,4 +1,4 @@
-aiofiles==0.7.0
+aiofiles==22.1.0
 appdirs==1.4.4
 astroid==2.4.2
 black==20.8b1
